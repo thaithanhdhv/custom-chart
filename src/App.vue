@@ -14,499 +14,154 @@ onMounted(async () => {
   if (target) {
     target.style.top = `${top + 300}px`;
   }
-  
 });
+
+const months = {
+    "8/2022": 10,
+    "9/2022": 20
+}
+const weeks= {
+    "week 1": 3,
+    "week 2": 7,
+    "week 3": 7,
+    "week 4": 7,
+    "week 5": 6
+}
+const dates = [
+      "10-08-2022",
+      "11-08-2022",
+      "12-08-2022",
+      "13-08-2022",
+      "14-08-2022",
+      "15-08-2022",
+      "16-08-2022",
+      "17-08-2022",
+      "18-08-2022",
+      "19-08-2022",
+      "20-08-2022",
+      "21-08-2022",
+      "22-08-2022",
+      "23-08-2022",
+      "24-08-2022",
+      "25-08-2022",
+      "26-08-2022",
+      "27-08-2022",
+      "28-08-2022",
+      "29-08-2022",
+      "30-08-2022",
+      "31-08-2022",
+      "01-09-2022",
+      "02-09-2022",
+      "03-09-2022",
+      "04-09-2022",
+      "05-09-2022",
+      "06-09-2022",
+      "07-09-2022",
+      "08-09-2022"
+]
+const planedData = {
+    "Chuyền 1": [
+      {
+        "product_no": "V_DB_KCS_2",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "11-08-2022",
+        "out_date": "23-08-2022"
+      },
+      {
+        "product_no": "V_DB_KCS_3",
+        "style_code": 142,
+        "color_code": 176,
+        "performance": 20,
+        "quantity": 40,
+        "current_progress": 15,
+        "in_date": "24-08-2022",
+        "out_date": "30-08-2022"
+      }
+    ],
+    "Chuyền 2": [
+      {
+        "product_no": "V_DB_KCS_2",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "11-08-2022",
+        "out_date": "23-08-2022"
+      },
+      {
+        "product_no": "V_DB_KCS_3",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "24-08-2022",
+        "out_date": "30-08-2022"
+      }
+    ]
+}
+
 </script>
+
 <template>
-  <!-- <div class="chart">
-    <div class="chart--left">
-      <div class="space"></div>
-      <div class="space"></div>
-      <div class="line-desc">
-        <div>Name</div>
-        <div>Dates</div>
-      </div>
-      <div class="events-name">
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 2 con</div>
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 2 con</div>
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 1 con</div>
-      </div>
-    </div>
-    <div class="chart--right">
-        <div class="chart--right--header">
-          <div class="month">
-            <div class="month--header">
-              <div class="month--name">Thang 8, 2022</div>
-              <div class="month--weeks">
-                <div class="month--weeks--item" v-for="i of 4" :key="i">
-                  <div class="month--weeks--name">Week {{ i }}</div>
-                    <div class="month--weeks--dates">
-                    <span class="month--dates--item" v-for="i of 7" :key="i">{{ i }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="month">
-            <div class="month--header">
-              <div class="month--name">Thang 8, 2022</div>
-              <div class="month--weeks">
-                <div class="month--weeks--item" v-for="i of 4" :key="i">
-                  <div class="month--weeks--name">Week {{ i }}</div>
-                    <div class="month--weeks--dates">
-                    <span class="month--dates--item" v-for="i of 7" :key="i">{{ i }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="chart--right--body">
-          <div class="body-items" v-for="i of 10" :key="i">i</div>
-        </div>
-    </div>
-  </div> -->
   <div class="table">
     <table>
     <thead>
       <tr>
-        <th class="abc">Teams</th>
-        <th colspan="28" class="month-date">Month 1</th>
-        <th colspan="28" class="month-date">Month 2</th>
+        <th class="abc" style="border-bottom: none;"></th>
+        <th v-for="(colspan, month) in months" :colspan="colspan" class="month-date">
+          {{ month }}
+        </th>
       </tr>
       <tr class="weeks">
-        <th class="abc">Teams</th>
-        <th colspan="7">Week 1</th>
-        <th colspan="7">Week 2</th>
-        <th colspan="7">Week 3</th>
-        <th colspan="7">Week 4</th>
-        <th colspan="7">Week 1</th>
-        <th colspan="7">Week 2</th>
-        <th colspan="7">Week 3</th>
-        <th colspan="7">Week 4</th>
+        <th class="abc" style="border-top: none;border-bottom: none;"></th>
+        <th v-for="(colspan, week) in weeks" :colspan="colspan">
+          {{ week }}
+        </th>
       </tr>
       <tr class="days">
-        <th class="abc">Teams</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
+        <th class="abc" style="border-top: none; width: 300px">
+          <table style="border: none;">
+            <tbody>
+              <tr>
+                <td style="border: none;">PO No.</td>
+                <td style="border: none;">Số ngày</td>
+              </tr>
+            </tbody>
+          </table>
+        </th>
+        <th v-for="date in dates">
+          {{ date }}
+        </th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
+    <tbody v-for="(products, department_name) in planedData" class="row">
+        <tr class="days">
+          <th class="abc">
+            {{department_name}}
+          </th>
+          <td colspan=30>
+          </td>
+        </tr>
+        <tr v-for="product in products">
+          <th>
+            <table style="border: none;">
+              <tbody>
+                <tr>
+                  <td style="border: none;">{{product.product_no}}</td>
+                  <td style="border: none;">{{product.quantity / product.performace}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </th>
+          <td v-for="date in dates" :class="(date >= product.in_date && date <= product.out_date) ? `bg-color` : ``">
+          </td>
+        </tr>
     </tbody>
   </table>
   </div>
@@ -649,7 +304,7 @@ table tbody th {
 }
 
 .abc {
-  width: 200px;
+  width: 350px !important;
 }
 .table {
   max-height: 300px;
@@ -664,5 +319,9 @@ tr.weeks th {
 }
 tr.days th {
   top: 62px;
+}
+
+.bg-color {
+  background-color: red;
 }
 </style>
