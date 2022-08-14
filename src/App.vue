@@ -1,4 +1,5 @@
 <script setup>
+import moment from 'moment';
 import { onMounted, nextTick } from 'vue';
 import PerfectScrollbar from 'perfect-scrollbar';
 import '../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
@@ -14,499 +15,158 @@ onMounted(async () => {
   if (target) {
     target.style.top = `${top + 300}px`;
   }
-  
 });
+
+const months = {
+    "8/2022": 10,
+    "9/2022": 20
+}
+const weeks= {
+    "week 1": 3,
+    "week 2": 7,
+    "week 3": 7,
+    "week 4": 7,
+    "week 5": 6
+}
+const dates = [
+      "08-10-2022",
+      "08-11-2022",
+      "08-12-2022",
+      "08-13-2022",
+      "08-14-2022",
+      "08-15-2022",
+      "08-16-2022",
+      "08-17-2022",
+      "08-18-2022",
+      "08-19-2022",
+      "08-20-2022",
+      "08-21-2022",
+      "08-22-2022",
+      "08-23-2022",
+      "08-24-2022",
+      "08-25-2022",
+      "08-26-2022",
+      "08-27-2022",
+      "08-28-2022",
+      "08-29-2022",
+      "08-30-2022",
+      "08-31-2022",
+      "09-01-2022",
+      "09-02-2022",
+      "09-03-2022",
+      "09-04-2022",
+      "09-05-2022",
+      "09-06-2022",
+      "09-07-2022",
+      "09-08-2022"
+]
+const planedData = {
+    "Chuyền 1": [
+      {
+        "product_no": "V_DB_KCS_2",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "11-08-2022",
+        "out_date": "23-08-2022"
+      },
+      {
+        "product_no": "V_DB_KCS_3",
+        "style_code": 142,
+        "color_code": 176,
+        "performance": 20,
+        "quantity": 40,
+        "current_progress": 15,
+        "in_date": "24-08-2022",
+        "out_date": "30-08-2022"
+      }
+    ],
+    "Chuyền 2": [
+      {
+        "product_no": "V_DB_KCS_2",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "11-08-2022",
+        "out_date": "23-08-2022"
+      },
+      {
+        "product_no": "V_DB_KCS_3",
+        "style_code": 142,
+        "color_code": 176,
+        "quantity": 40,
+        "performance": 20,
+        "current_progress": 15,
+        "in_date": "24-08-2022",
+        "out_date": "30-08-2022"
+      }
+    ]
+}
+
+function getDate(date) {
+  return moment(date).format('DD');
+}
+
 </script>
+
 <template>
-  <!-- <div class="chart">
-    <div class="chart--left">
-      <div class="space"></div>
-      <div class="space"></div>
-      <div class="line-desc">
-        <div>Name</div>
-        <div>Dates</div>
-      </div>
-      <div class="events-name">
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 2 con</div>
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 2 con</div>
-        <div class="event--item">Chuyen 1</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 1 con</div>
-        <div class="event--item">Chuyen 1 con</div>
-      </div>
-    </div>
-    <div class="chart--right">
-        <div class="chart--right--header">
-          <div class="month">
-            <div class="month--header">
-              <div class="month--name">Thang 8, 2022</div>
-              <div class="month--weeks">
-                <div class="month--weeks--item" v-for="i of 4" :key="i">
-                  <div class="month--weeks--name">Week {{ i }}</div>
-                    <div class="month--weeks--dates">
-                    <span class="month--dates--item" v-for="i of 7" :key="i">{{ i }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="month">
-            <div class="month--header">
-              <div class="month--name">Thang 8, 2022</div>
-              <div class="month--weeks">
-                <div class="month--weeks--item" v-for="i of 4" :key="i">
-                  <div class="month--weeks--name">Week {{ i }}</div>
-                    <div class="month--weeks--dates">
-                    <span class="month--dates--item" v-for="i of 7" :key="i">{{ i }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="chart--right--body">
-          <div class="body-items" v-for="i of 10" :key="i">i</div>
-        </div>
-    </div>
-  </div> -->
   <div class="table">
     <table>
     <thead>
       <tr>
-        <th class="abc">Teams</th>
-        <th colspan="28" class="month-date">Month 1</th>
-        <th colspan="28" class="month-date">Month 2</th>
+        <th class="abc" style="border-bottom: none;"></th>
+        <th v-for="(colspan, month) in months" :colspan="colspan" class="month-date">
+          {{ month }}
+        </th>
       </tr>
       <tr class="weeks">
-        <th class="abc">Teams</th>
-        <th colspan="7">Week 1</th>
-        <th colspan="7">Week 2</th>
-        <th colspan="7">Week 3</th>
-        <th colspan="7">Week 4</th>
-        <th colspan="7">Week 1</th>
-        <th colspan="7">Week 2</th>
-        <th colspan="7">Week 3</th>
-        <th colspan="7">Week 4</th>
+        <th class="abc" style="border-top: none;border-bottom: none;"></th>
+        <th v-for="(colspan, week) in weeks" :colspan="colspan">
+          {{ week }}
+        </th>
       </tr>
       <tr class="days">
-        <th class="abc">Teams</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
+        <th class="abc" style="border-top: none; width: 300px">
+          <table style="border: none;">
+            <tbody>
+              <tr>
+                <td style="border: none;">PO No.</td>
+                <td style="border: none;">Số ngày</td>
+              </tr>
+            </tbody>
+          </table>
+        </th>
+        <th v-for="date in dates">
+          {{ getDate(date) }}
+        </th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <th>Milwaukee Brewers</th>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>3</td>
-        <td>3</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
+    <tbody v-for="(products, department_name) in planedData" class="row">
+        <tr class="days">
+          <th class="abc">
+            {{department_name}}
+          </th>
+          <td colspan=30>
+          </td>
+        </tr>
+        <tr v-for="(product, idx) in products" :key="idx">
+          <th>
+            <table style="border: none;">
+              <tbody>
+                <tr>
+                  <td style="border: none;">{{product.product_no}}</td>
+                  <td style="border: none;">{{product.quantity / product.performace}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </th>
+          <td v-for="date in dates" :class="(date >= product.in_date && date <= product.out_date) ? `bg-color` : ``">
+          </td>
+        </tr>
     </tbody>
   </table>
   </div>
@@ -649,7 +309,7 @@ table tbody th {
 }
 
 .abc {
-  width: 200px;
+  width: 350px !important;
 }
 .table {
   max-height: 300px;
@@ -664,5 +324,9 @@ tr.weeks th {
 }
 tr.days th {
   top: 62px;
+}
+
+.bg-color {
+  background-color: red;
 }
 </style>
