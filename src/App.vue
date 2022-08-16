@@ -1,32 +1,32 @@
 <script setup>
 import moment from 'moment';
-import { onMounted, nextTick } from 'vue';
-import PerfectScrollbar from 'perfect-scrollbar';
-import '../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
-onMounted(async () => {
-  await nextTick();
-  const ps = new PerfectScrollbar('.chart--right', {
-    wheelSpeed: 2,
-  })
-  const elm = document.querySelector('.chart');
-  const position = elm.getBoundingClientRect();
-  const top = position.top;
-  const target = document.querySelector('.ps__rail-x');
-  if (target) {
-    target.style.top = `${top + 300}px`;
-  }
-});
+// import { onMounted, nextTick } from 'vue';
+// import PerfectScrollbar from 'perfect-scrollbar';
+// import '../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
+// onMounted(async () => {
+//   await nextTick();
+//   const ps = new PerfectScrollbar('.chart--right', {
+//     wheelSpeed: 2,
+//   })
+//   const elm = document.querySelector('.chart');
+//   const position = elm.getBoundingClientRect();
+//   const top = position.top;
+//   const target = document.querySelector('.ps__rail-x');
+//   if (target) {
+//     target.style.top = `${top + 300}px`;
+//   }
+// });
 
-const months = {
-    "8/2022": 10,
-    "9/2022": 20
-}
+// const months = {
+//     "8/2022": 10,
+//     "9/2022": 20
+// }
 const weeks= {
     "week 1": 3,
     "week 2": 7,
     "week 3": 7,
     "week 4": 7,
-    "week 5": 6
+    "week 3": 6
 }
 const dates = [
       "08-10-2022",
@@ -60,6 +60,35 @@ const dates = [
       "09-07-2022",
       "09-08-2022"
 ]
+
+const abc = {};
+const months = [];
+
+const getWeekNumber = (d) => {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((((d - yearStart) / 86400000) + 1) / 7));
+  return weekNo;
+}
+
+const formatData = () => {
+  const uniqueMonths = [...new Set(dates.map(date => moment(date).format('MM/YYYY')))];
+  uniqueMonths.forEach(item => abc[item] = []);
+  dates.forEach(item => {
+    const month = moment(item).format('MM/YYYY');
+    const week = getWeekNumber(new Date(item));
+    if (!abc[month][week]) {
+      abc[month][week] = [];
+    }
+    abc[month][week].push(item);
+    console.log(abc);
+    // Object.keys(abc).forEach(key => {
+    //   removeEmpty(abc[key]);
+    // })
+  })
+}
+formatData();
 const planedData = {
     "Chuyền 1": [
       {
@@ -69,8 +98,8 @@ const planedData = {
         "quantity": 40,
         "performance": 20,
         "current_progress": 15,
-        "in_date": "11-08-2022",
-        "out_date": "23-08-2022"
+        "in_date": "08-11-2022",
+        "out_date": "08-23-2022"
       },
       {
         "product_no": "V_DB_KCS_3",
@@ -79,8 +108,8 @@ const planedData = {
         "performance": 20,
         "quantity": 40,
         "current_progress": 15,
-        "in_date": "24-08-2022",
-        "out_date": "30-08-2022"
+        "in_date": "08-24-2022",
+        "out_date": "08-30-2022"
       }
     ],
     "Chuyền 2": [
@@ -91,8 +120,8 @@ const planedData = {
         "quantity": 40,
         "performance": 20,
         "current_progress": 15,
-        "in_date": "11-08-2022",
-        "out_date": "23-08-2022"
+        "in_date": "08-11-2022",
+        "out_date": "08-23-2022"
       },
       {
         "product_no": "V_DB_KCS_3",
@@ -101,8 +130,8 @@ const planedData = {
         "quantity": 40,
         "performance": 20,
         "current_progress": 15,
-        "in_date": "24-08-2022",
-        "out_date": "30-08-2022"
+        "in_date": "08-24-2022",
+        "out_date": "08-30-2022"
       }
     ]
 }
