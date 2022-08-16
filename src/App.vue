@@ -1,17 +1,8 @@
 <script setup>
 import moment from 'moment';
 import randomColor from 'randomcolor';
-// const months = {
-//     "8/2022": 10,
-//     "9/2022": 20
-// }
-// const weeks= {
-//     "week 1": 3,
-//     "week 2": 7,
-//     "week 3": 7,
-//     "week 4": 7,
-//     "week 3": 6
-// }
+const minDate = '08-10-2022';
+const maxDate = '09-08-2022'
 const dates = [
   '08-10-2022',
   '08-11-2022',
@@ -91,29 +82,31 @@ const planedData = {
   ],
 };
 
-let randomColors = {};
-const abc = {};
+const date_hash = {};
 let months = [];
 let weeks = [];
 
-Object.values(planedData).forEach((item) => {
-  item.forEach((i) => {
-    randomColors[i.product_no] = randomColor();
-  });
-});
+const colors = ["#EC5785", "#00D9F5", "#7DBD51", "#DCA037", "#EC5428", "#4FA5F6", "#C14C2A", "#F19D38", "#6CD2D2", "#6631A6", "#26077C", "#7131FF", "#00ECBB", "#DB234B" ]
 
-const getRandomColor = (index) => {
-  const randomNumber = Math.floor(Math.random() * randomColors.length) + 1;
-  return index ? randomColors[index] : randomColors[randomNumber];
-};
+const getStyle = (date, dayStart, dayEnd, idx, idx1, product) => {
+  const numImplemented = Math.round((product.current_progress * 1.0 / product.quantity) * getNumOfDays(dayEnd, dayStart));
+  const firstImplementedDay = new Date(dayStart);
+  const lastImplementedDay = moment(firstImplementedDay.setDate(firstImplementedDay.getDate() + numImplemented)).format('MM-DD-YYYY');
 
-const getStyle = (date, dayStart, dayEnd, key) => {
-  const color = getRandomColor(key);
+  var bgColor = { backgroundColor: colors[idx] }
+  var borderRadius = {}
+  var opacity = {}
   if (date >= dayStart && date <= dayEnd) {
-    return {
-      backgroundColor: color,
-    };
+    if (date == dayStart) {
+      borderRadius = {borderRadius: "5px 0px 0px 5px"};
+    } else if (date == dayEnd) {
+      borderRadius = {borderRadius: "0px 5px 5px 0px"};
+    }
+    if (lastImplementedDay <= date) opacity = {opacity: 0.5};
+
+    return {...bgColor, ...borderRadius, ...opacity};
   }
+
   return {};
 };
 const getNumOfDays = (day1, day2) => {
@@ -126,7 +119,7 @@ const getNumOfDays = (day1, day2) => {
 
 const calculateMonthDays = (month) => {
   let total = 0;
-  const data = abc[month];
+  const data = date_hash[month];
   Object.values(data).forEach((value) => {
     total += value.length;
   });
@@ -137,7 +130,7 @@ const getWeeksDay = (w) => {
   const data = w.split('-');
   const week = data[0];
   const month = data[1];
-  const target = abc[month][week];
+  const target = date_hash[month][week];
   return target.length;
 };
 
@@ -151,16 +144,16 @@ const getWeekNumber = (d) => {
 
 const formatData = () => {
   const uniqueMonths = [...new Set(dates.map((date) => moment(date).format('MM/YYYY')))];
-  uniqueMonths.forEach((item) => (abc[item] = {}));
+  uniqueMonths.forEach((item) => (date_hash[item] = {}));
   months = uniqueMonths;
   dates.forEach((item) => {
     const month = moment(item).format('MM/YYYY');
     const week = getWeekNumber(new Date(item));
     weeks.push({ week, month });
-    if (!abc[month][week]) {
-      abc[month][week] = [];
+    if (!date_hash[month][week]) {
+      date_hash[month][week] = [];
     }
-    abc[month][week].push(item);
+    date_hash[month][week].push(item);
   });
 };
 formatData();
@@ -172,11 +165,11 @@ function getDate(date) {
 </script>
 
 <template>
-  <div class="table">
+  <div class="table" style="border: 1px solid #E4E4E4;">
     <table>
-      <thead>
+      <thead style="font-size: 125%;">
         <tr>
-          <th class="abc" style="border-bottom: none"></th>
+          <th class="th-class bb-none"></th>
           <th
             v-for="month in months"
             :colspan="calculateMonthDays(month)"
@@ -188,18 +181,18 @@ function getDate(date) {
           </th>
         </tr>
         <tr class="weeks">
-          <th class="abc" style="border-top: none; border-bottom: none"></th>
+          <th class="th-class bt-none bb-none"></th>
           <th v-for="week in uniqueWeeks" :colspan="getWeeksDay(week)" :key="`week-${week}`">
             Week {{ week.slice(0, 2) }}
           </th>
         </tr>
         <tr class="days">
-          <th class="abc" style="border-top: none; width: 300px">
+          <th class="th-class bt-none" style="width: 300px;padding: 3px 14px;">
             <table style="border: none">
               <tbody>
                 <tr>
-                  <td style="border: none">PO No.</td>
-                  <td style="border: none">Số ngày</td>
+                  <td style="border: none; text-align:left">PO No.</td>
+                  <td style="border: none; text-align:right">Số ngày</td>
                 </tr>
               </tbody>
             </table>
@@ -210,23 +203,25 @@ function getDate(date) {
         </tr>
       </thead>
       <tbody
-        v-for="(products, department_name) in planedData"
+        v-for="(products, department_name, idx) in planedData"
         class="row"
         :key="`product-${department_name}`"
       >
         <tr class="days">
-          <th class="abc">
-            {{ department_name }}
+          <th class="th-class bg-department bt-none bb-none">
+            <strong>
+              {{ department_name }}
+            </strong>
           </th>
-          <td colspan="30"></td>
+          <td class="bg-department" :colspan="dates.length"></td>
         </tr>
-        <tr v-for="(product, idx) in products" :key="idx">
-          <th>
+        <tr v-for="(product, idx_1) in products" :key="idx_1">
+          <th class="bt-none bb-none">
             <table style="border: none">
               <tbody>
                 <tr>
                   <td style="border: none">{{ product.product_no }}</td>
-                  <td style="border: none">
+                  <td style="border: none; text-align:right">
                     {{ getNumOfDays(product.out_date, product.in_date) }}
                   </td>
                 </tr>
@@ -234,9 +229,9 @@ function getDate(date) {
             </table>
           </th>
           <td
-            v-for="date in dates"
+            v-for="(date, idx_2) in dates"
             :key="`${date}-date`"
-            :style="getStyle(date, product.in_date, product.out_date, product.product_no)"
+            :style="getStyle(date, product.in_date, product.out_date, idx, idx_2, product)"
             :class="date >= product.in_date && date <= product.out_date ? `bg-color` : ``"
           ></td>
         </tr>
@@ -334,19 +329,19 @@ function getDate(date) {
   left: 200px !important;
 }
 table {
-  font-size: 125%;
   white-space: nowrap;
   margin: 0;
-  border: none;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
-  border: 1px solid black;
+  border: none;
   width: 100%;
 }
-table td,
+table td {
+  padding: 0.5rem 1rem;
+}
 table th {
-  border: 1px solid black;
+  border-top: none;
   padding: 0.5rem 1rem;
 }
 table thead th {
@@ -357,17 +352,19 @@ table thead th {
   background: white;
   min-width: 50px;
 }
+table thead th {
+  border: 1px solid #E4E4E4;
+}
 table td {
   background: #fff;
   padding: 4px 5px;
-  text-align: center;
 }
-
 table tbody th {
   font-weight: 100;
   font-style: italic;
   text-align: left;
   position: relative;
+  border: 1px solid #E4E4E4;
 }
 table thead th:first-child {
   position: sticky;
@@ -380,8 +377,7 @@ table tbody th {
   background: white;
   z-index: 1;
 }
-
-.abc {
+.th-class {
   width: 350px !important;
 }
 .table {
@@ -398,8 +394,19 @@ tr.weeks th {
 tr.days th {
   top: 62px;
 }
-
-.bg-color {
-  background-color: red;
+.bg-department {
+  background-color: #F2F2F2;
+}
+.bt-none {
+  border-top: none;
+}
+.bb-none {
+  border-bottom: none;
+}
+.bl-none {
+  border-left: none;
+}
+.br-none {
+  border-right: none;
 }
 </style>
