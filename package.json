@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "moment": "^2.29.4",
+    "monent": "^0.0.2-security",
     "perfect-scrollbar": "^1.5.5",
+    "randomcolor": "^0.6.2",
     "vue": "^3.2.37"
   },
   "devDependencies": {
