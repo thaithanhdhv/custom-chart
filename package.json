@@ -13,7 +13,8 @@
     "monent": "^0.0.2-security",
     "perfect-scrollbar": "^1.5.5",
     "randomcolor": "^0.6.2",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-marquee-text-component": "^2.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.0",
