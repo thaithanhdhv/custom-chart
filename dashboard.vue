@@ -70,9 +70,9 @@ body {
   font-size: 140px;
   display: inline-block;
   background: #7958c0;
-  border-radius: 41px;
+  border-radius: 20px;
   color: white;
-  padding: 40px 100px;
+  padding: 25px 100px;
 }
 
 .number-top {
@@ -91,7 +91,8 @@ body {
 
 .dash--bottom {
   padding: 50px;
-  height: 50%;
+  padding-top: 120px;
+  height: 40%;
   display: flex;
 }
 
@@ -99,7 +100,7 @@ body {
   width: calc(50% - 25px);
   background: #ff8d26;
   display: inline-block;
-  border-radius: 80px;
+  border-radius: 30px;
   height: 95%;
 }
 
@@ -136,14 +137,21 @@ body {
   font-size: 120px;
   color: white;
 }
-.box--title img {
+.icon-dash-1 {
+  width: 60px;
+  width: 60px;
+  margin-right: 20px;
+}
+
+.icon-dash-2 {
   width: 120px;
   width: 120px;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .number {
   font-size: 350px;
+  font-weight: 700;
   color: white;
 }
 .dash--absolute {
@@ -151,7 +159,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  top: 50px;
   right: 0;
   left: 0;
   height: 300px;
@@ -202,23 +209,23 @@ body {
   }
 
   .dash--right {
-    font-size: 40px;
+    font-size: 65px;
     line-height: 50px;
   }
   .tag {
     font-size: 50px;
   }
   .box--title {
-    font-size: 90px;
+    font-size: 60px;
   }
   .dash--left {
-    font-size: 50px;
+    font-size: 65px;
   }
   .number-top {
-    font-size: 200px;
+    font-size: 250px;
   }
   .number {
-    font-size: 100px;
+    font-size: 200px;
   }
 }
 /* .marquee {
